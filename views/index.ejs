@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <title>Dr. Gaurav Minocha - Revive Pain, Regain Life</title>
+    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="author" content="Dr. Gaurav">
+    <meta name="description" content="Dr. Gaurav Mincoha - Physiotherapist, Posture Expert who treats patients affected by injury through movement and exercise, manual therapy, education and advice.">
+    <meta name="keywords" content="Dr. Gaurav Physiotherapy, Dr. Gaurav Physiotherapy Haridwar, Dr. Gaurav Haridwar, Dr. Gaurav Mincoha, Dr. Gaurav Mincoha Haridwar, Physiotherapist, Posture Expert, Geriatric care, Spondylitis And Low Back Pain, Rehabilitation after surgery like TKR and THR, Chest physiotherapy for COVID patients, General Condioning exercises, Book Appointment" >
+    <link rel="canonical" href="https://drgauravphysiotherapy.co.in/">
+    <link rel="apple-touch-icon" sizes="152x152" href="/static/favicon/apple-icon-152x152.png">
+    <link rel="icon" type="image/png" href="/static/favicon/favicon-96x96.png">
+    <link rel="manifest" href="/static/favicon/manifest.json">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Dr. Gaurav - Revive Pain, Regain Life">
+    <meta property="og:description" content="Doctor Gaurav is a physiotherapist who has an experience of 17 years and guides patients towards preventive healthcare and postural trainings. He treats patients affected by injury through movement and exercise, manual therapy, education, advice and Dr. Gaurav also guides you with the efficient approach & practical solutions to real Occupational Ergonomic, Health, and Safety challenge which are proven effective in reducing workplace injuries.">
+    <meta property="og:url" content="https://drgauravphysiotherapy.co.in/">
+    <meta property="og:site_name" content="Dr. Gaurav Minocha Physiotherapy">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body>
+
+    <% if(enquiry_posted.length!=0) { %>
+        <div class="alert alert-success alert-dismissible fade show mb-[2px] text-sm md:text-base" role="alert">
+          <strong><%= enquiry_posted %></strong>
+          <button type="button" class="btn-close text-lg md:text-3xl text-slate-500" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+        </div>
+      <% } %>
+  
+      <% if(appointment_booked.length!=0) { %>
+        <div class="alert alert-success alert-dismissible fade show mb-[2px] text-sm md:text-base" role="alert">
+          <strong><%= appointment_booked %></strong>
+          <button type="button" class="btn-close text-lg md:text-3xl text-slate-500" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+        </div>
+      <% } %>
+
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content p-1">
+            <div class="modal-header">
+              <h2 class="modal-title text-2xl" id="modalLabel">Quick Enquiry</h2>
+              <button type="button" class="btn-close text-3xl text-slate-500" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form action="/enquiry" method="post">
+                    <div class="mb-5">
+                        <label for="username" class=" my-0">Name <sup class="text-red-600">*</sup></label>
+                        <input type="text" class="w-full border-2 rounded-md px-2 py-1" name="name" id="username" placeholder="Your Name Here">
+                        <div id="username-req" class="text-sm md:text-base text-red-600" style="display: none;">Name cannot be blank </div>
+                    </div>
+                    <div class="mb-5">
+                        <label for="usercont" class=" my-0">Contact Number <sup class="text-red-600">*</sup></label>
+                        <input type="number" class="w-full border-2 rounded-md px-2 py-1" name="contact" id="usercont" placeholder="Your Contact Number Here">
+                        <div id="usercont-req" class="text-sm md:text-base text-red-600" style="display: none;">Contact Number cannot be blank </div>
+                        <div id="usercont-format" class="text-sm md:text-base text-red-600" style="display: none;">Invalid Contact Number </div>
+                        <div id="usercont-start" class="text-sm md:text-base text-red-600" style="display: none;">Contact Number should not start with 0</div>
+                    </div>
+                    <div class="mb-3 d-flex flex-column">
+                        <label for="usertime" class="">Enquiry / Problem <sup class="text-red-600">*</sup></label>
+                        <textarea name="enquiry" class="w-full border-2 rounded-md px-2 py-1" id="enq" cols="30" rows="3" placeholder="Your Enquiry Here"></textarea>
+                        <div id="enq-req" class="text-sm md:text-base text-red-600" style="display: none;">Enquiry/Problem cannot be blank </div>
+                    </div>
+                    <button id="enquiry" class="bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-1 rounded-md" id="appointment" type="submit">Submit</button>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <div class="top-bar bg-slate-100 shadow py-2 px-3 flex items-center justify-between md:px-[5px] lg:px-10">
+        <div class="logo">
+            <a href="/" class="flex items-center">
+                <img class="w-[15%] md:w-1/6" src="/static/images/logo.webp" alt="Dr. Gaurav Physiotherapy Logo">
+                <div>
+                    <div class="font-bold lg:text-xl" style="color: teal;">Dr. Gaurav</div>
+                    <div class="text-sm text-slate-500" style="font-family: sans-serif;">PHYSIOTHERAPY</div>
+                </div>
+            </a>
+        </div>
+        <div class="information flex items-center space-x-2 md:space-x-3 lg:space-x-4">
+            <a aria-label="location" class="flex items-center hover:text-cyan-700" href="https://www.google.com/maps/dir//Arya+Nagar,+Haridwar,+Uttarakhand/@29.9230332,78.1142582,16z/data=!4m8!4m7!1m0!1m5!1m1!1s0x39094623b0017f4b:0x5631810e1ce6979f!2m2!1d78.1186694!2d29.923046" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 0 24 24" width="25px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.88-2.88 7.19-5 9.88C9.92 16.21 7 11.85 7 9z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                <span class="ml-1 hidden md:block">Haridwar</span>
+            </a>
+            <a aria-label="email" class="flex items-center hover:text-cyan-700" href="mailto:kartikenminocha@gmail.com">
+                <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 0 24 24" width="25px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
+                <span class="ml-1 hidden md:block">kartikenminocha@gmail.com</span>
+            </a>
+            <a aria-label="contact" class="flex items-center hover:text-cyan-700" href="tel:+91 9719077550">
+                <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 0 24 24" width="25px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79h1.51m9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75l1.2-1.19M7.5 3H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1-1.24 0-2.45-.2-3.57-.57-.1-.04-.21-.05-.31-.05-.26 0-.51.1-.71.29l-2.2 2.2c-2.83-1.45-5.15-3.76-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1z"/></svg>
+                <span class="ml-1 hidden md:block">+91 9719077550</span>
+            </a>
+            <a class="lg:hidden" aria-label="Facebook" href="https://www.facebook.com/Dr-Gaurav-Physiotherapy-103517138954972/" target="_blank" rel="noopener noreferrer">
+                <svg class="hover:fill-blue-700" fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25px" height="25px"><path d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.014467 17.065322 19.313017 13.21875 19.898438 L 13.21875 14.384766 L 15.546875 14.384766 L 15.912109 12.019531 L 13.21875 12.019531 L 13.21875 10.726562 C 13.21875 9.7435625 13.538984 8.8710938 14.458984 8.8710938 L 15.935547 8.8710938 L 15.935547 6.8066406 C 15.675547 6.7716406 15.126844 6.6953125 14.089844 6.6953125 C 11.923844 6.6953125 10.654297 7.8393125 10.654297 10.445312 L 10.654297 12.019531 L 8.4277344 12.019531 L 8.4277344 14.384766 L 10.654297 14.384766 L 10.654297 19.878906 C 6.8702905 19.240845 4 15.970237 4 12 C 4 7.5698774 7.5698774 4 12 4 z"/></svg>
+            </a>
+            <a class="lg:hidden" aria-label="Youtube" href="https://www.youtube.com/channel/UC3NXmBb-j5MO5I7eHl5G5fA" target="_blank" rel="noopener noreferrer">
+                <svg class="hover:fill-red-600" fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25px" height="25px">    <path d="M 12 4 C 12 4 5.7455469 3.9999687 4.1855469 4.4179688 C 3.3245469 4.6479688 2.6479687 5.3255469 2.4179688 6.1855469 C 1.9999687 7.7455469 2 12 2 12 C 2 12 1.9999687 16.254453 2.4179688 17.814453 C 2.6479687 18.675453 3.3255469 19.352031 4.1855469 19.582031 C 5.7455469 20.000031 12 20 12 20 C 12 20 18.254453 20.000031 19.814453 19.582031 C 20.674453 19.352031 21.352031 18.674453 21.582031 17.814453 C 22.000031 16.254453 22 12 22 12 C 22 12 22.000031 7.7455469 21.582031 6.1855469 C 21.352031 5.3255469 20.674453 4.6479688 19.814453 4.4179688 C 18.254453 3.9999687 12 4 12 4 z M 12 6 C 14.882 6 18.490875 6.1336094 19.296875 6.3496094 C 19.465875 6.3946094 19.604391 6.533125 19.650391 6.703125 C 19.891391 7.601125 20 10.342 20 12 C 20 13.658 19.891391 16.397875 19.650391 17.296875 C 19.605391 17.465875 19.466875 17.604391 19.296875 17.650391 C 18.491875 17.866391 14.882 18 12 18 C 9.119 18 5.510125 17.866391 4.703125 17.650391 C 4.534125 17.605391 4.3956094 17.466875 4.3496094 17.296875 C 4.1086094 16.398875 4 13.658 4 12 C 4 10.342 4.1086094 7.6011719 4.3496094 6.7011719 C 4.3946094 6.5331719 4.533125 6.3946094 4.703125 6.3496094 C 5.508125 6.1336094 9.118 6 12 6 z M 10 8.5351562 L 10 15.464844 L 16 12 L 10 8.5351562 z"/></svg>
+            </a>
+        </div>
+        <div class="social hidden lg:flex items-center space-x-3">
+            <a aria-label="Facebook" href="https://www.facebook.com/Dr-Gaurav-Physiotherapy-103517138954972/" target="_blank" rel="noopener noreferrer">
+                <svg class="hover:fill-blue-700" fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30px" height="30px"><path d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.014467 17.065322 19.313017 13.21875 19.898438 L 13.21875 14.384766 L 15.546875 14.384766 L 15.912109 12.019531 L 13.21875 12.019531 L 13.21875 10.726562 C 13.21875 9.7435625 13.538984 8.8710938 14.458984 8.8710938 L 15.935547 8.8710938 L 15.935547 6.8066406 C 15.675547 6.7716406 15.126844 6.6953125 14.089844 6.6953125 C 11.923844 6.6953125 10.654297 7.8393125 10.654297 10.445312 L 10.654297 12.019531 L 8.4277344 12.019531 L 8.4277344 14.384766 L 10.654297 14.384766 L 10.654297 19.878906 C 6.8702905 19.240845 4 15.970237 4 12 C 4 7.5698774 7.5698774 4 12 4 z"/></svg>
+            </a>
+            <a aria-label="Youtube" href="https://www.youtube.com/channel/UC3NXmBb-j5MO5I7eHl5G5fA" target="_blank" rel="noopener noreferrer">
+                <svg class="hover:fill-red-600" fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30px" height="30px">    <path d="M 12 4 C 12 4 5.7455469 3.9999687 4.1855469 4.4179688 C 3.3245469 4.6479688 2.6479687 5.3255469 2.4179688 6.1855469 C 1.9999687 7.7455469 2 12 2 12 C 2 12 1.9999687 16.254453 2.4179688 17.814453 C 2.6479687 18.675453 3.3255469 19.352031 4.1855469 19.582031 C 5.7455469 20.000031 12 20 12 20 C 12 20 18.254453 20.000031 19.814453 19.582031 C 20.674453 19.352031 21.352031 18.674453 21.582031 17.814453 C 22.000031 16.254453 22 12 22 12 C 22 12 22.000031 7.7455469 21.582031 6.1855469 C 21.352031 5.3255469 20.674453 4.6479688 19.814453 4.4179688 C 18.254453 3.9999687 12 4 12 4 z M 12 6 C 14.882 6 18.490875 6.1336094 19.296875 6.3496094 C 19.465875 6.3946094 19.604391 6.533125 19.650391 6.703125 C 19.891391 7.601125 20 10.342 20 12 C 20 13.658 19.891391 16.397875 19.650391 17.296875 C 19.605391 17.465875 19.466875 17.604391 19.296875 17.650391 C 18.491875 17.866391 14.882 18 12 18 C 9.119 18 5.510125 17.866391 4.703125 17.650391 C 4.534125 17.605391 4.3956094 17.466875 4.3496094 17.296875 C 4.1086094 16.398875 4 13.658 4 12 C 4 10.342 4.1086094 7.6011719 4.3496094 6.7011719 C 4.3946094 6.5331719 4.533125 6.3946094 4.703125 6.3496094 C 5.508125 6.1336094 9.118 6 12 6 z M 10 8.5351562 L 10 15.464844 L 16 12 L 10 8.5351562 z"/></svg>
+            </a>
+        </div>
+    </div>
+
+    <nav class="bg-cyan-700 text-white py-[5px]">
+        <div class="md:hidden">
+            <button aria-label="Hamburger Icon" onclick="openNavbarLinks()" class="block mx-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" height="33px" viewBox="0 0 24 24" width="33px" fill="white"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            </button>
+            <div id="navbarLinks" class="flex flex-col text-sm sm:text-[15px] items-center space-y-1 overflow-hidden" style="height: 0px;transition: 0.3s;">
+                <a class="hover:text-slate-200 pt-1" href="/">Home</a>
+                <a class="hover:text-slate-200" href="#about">About</a>
+                <a class="hover:text-slate-200" href="#our-services">Our Services</a>
+                <a class="hover:text-slate-200" href="#testimonials">Testimonials</a>
+                <button class="hover:text-slate-200 pb-1" data-bs-toggle="modal" data-bs-target="#modal" href="">Quick Enquiry</button>
+            </div>
+        </div>
+        <div class="hidden md:flex md:space-x-5 lg:space-x-8 lg:text-lg justify-center">
+            <a class="hover:text-slate-200" href="/">Home</a>
+            <a class="hover:text-slate-200" href="#about">About</a>
+            <a class="hover:text-slate-200" href="#our-services">Our Services</a>
+            <a class="hover:text-slate-200" href="#testimonials">Testimonials</a>
+            <button class="hover:text-slate-200" data-bs-toggle="modal" data-bs-target="#modal" href="">Quick Enquiry</button>
+        </div>
+    </nav>
+
+    <div id="fixedNavbar" class="top-0 bg-slate-200 z-10 w-full justify-between text-slate-700 items-center px-10" style="display: none;">
+        <a href="/" class="flex items-center py-1">
+            <img class="md:w-[13%]" src="/static/images/logo.webp" alt="Dr. Gaurav Physiotherapy Logo">
+            <div>
+                <div class="font-bold lg:text-xl" style="color: teal;">Dr. Gaurav</div>
+                <div class="text-sm text-slate-500" style="font-family: sans-serif;">PHYSIOTHERAPY</div>
+            </div>
+        </a>
+        <div class="hidden md:flex md:space-x-5 lg:space-x-8 lg:text-lg justify-center">
+            <a class="hover:text-cyan-700" href="/">Home</a>
+            <a id="aboutLink" class="hover:text-cyan-700" href="#about">About</a>
+            <a id="servicesLink" class="hover:text-cyan-700" href="#our-services">Our Services</a>
+            <a id="testimonialsLink" class="hover:text-cyan-700" href="#testimonials">Testimonials</a>
+            <button class="hover:text-cyan-700" data-bs-toggle="modal" data-bs-target="#modal" href="">Quick Enquiry</button>
+        </div>
+    </div>
+
+    <div class="flex justify-center px-[2px] flex-col md:flex-row items-center py-8 md:py-10 bg-cyan-50 md:px-0">
+        <div class="w-[80vw] sm:w-[70vw] pb-5 md:pb-0 md:order-2 md:w-[50vw] physiotherapy-image">
+            <img src="/static/images/bgimg.webp" alt="Physiotherapy Image">
+        </div>
+        <div class="md:order-1">
+            <h2 class="text-xl md:text-[22px] lg:text-3xl text-cyan-700 text-center">Dr. Gaurav Minocha Physiotherapy</h2>
+            <div class="border-2 rounded-b-xl my-2 md:my-[10px] border-lime-500 mx-1"></div>
+            <h3 class="text-lg md:text-xl lg:text-[25px] flex items-center justify-center" style="color: brown;">
+                Revive Pain, Regain Life 
+                <svg class="ml-1" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="brown"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.49 9.63c-.18-2.79-1.31-5.51-3.43-7.63-2.14 2.14-3.32 4.86-3.55 7.63 1.28.68 2.46 1.56 3.49 2.63 1.03-1.06 2.21-1.94 3.49-2.63zm-3.44-4.44c.63 1.03 1.07 2.18 1.3 3.38-.47.3-.91.63-1.34.98-.42-.34-.87-.67-1.33-.97.25-1.2.71-2.35 1.37-3.39zM12 15.45c-.82-1.25-1.86-2.34-3.06-3.2-.13-.09-.27-.16-.4-.26.13.09.27.17.39.25C6.98 10.83 4.59 10 2 10c0 5.32 3.36 9.82 8.03 11.49.63.23 1.29.4 1.97.51.68-.12 1.33-.29 1.97-.51C18.64 19.82 22 15.32 22 10c-4.18 0-7.85 2.17-10 5.45zm1.32 4.15c-.44.15-.88.27-1.33.37-.44-.09-.87-.21-1.28-.36-3.29-1.18-5.7-3.99-6.45-7.35 1.1.26 2.15.71 3.12 1.33l-.02.01c.13.09.26.18.39.25l.07.04c.99.72 1.84 1.61 2.51 2.65L12 19.1l1.67-2.55c.69-1.05 1.55-1.95 2.53-2.66l.07-.05c.09-.05.18-.11.27-.17l-.01-.02c.98-.65 2.07-1.13 3.21-1.4-.75 3.37-3.15 6.18-6.42 7.35zm-4.33-7.32c-.02-.01-.04-.03-.05-.04 0 0 .01 0 .01.01.01.01.02.02.04.03z"/></svg>
+            </h3>
+            <div class="mt-8 md:mt-16 text-center">
+                <a class="bg-cyan-700 hover:bg-cyan-800 text-white px-3 py-[10px] rounded-lg text-lg" href="#book-appointment">Book Appointment</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="py-8 px-5 lg:px-0">
+        <h4 class="text-xl md:text-[22px] lg:text-3xl text-center text-cyan-800">About Dr. Gaurav</h4>
+        <h4 class="text-base md:text-lg lg:text-xl text-center pt-1 md:pt-2 text-cyan-600">Physiotherapist | Posture Expert</h4>
+        <div class="my-3 flex flex-col md:flex-row justify-center items-center pt-2 md:pt-8">
+            <div class="text-slate-500 md:w-1/3 md:mx-5 lg:mx-8 text-base lg:text-lg">
+                Having completed a Degree of Physiotherapy, Dr. Gaurav treats patients affected by injury through movement and exercise, manual therapy, education and advice. 
+                He has an experience of 17 years and guides patients towards preventive healthcare and postural trainings.
+                <h4 class="font-extrabold text-slate-700 py-1">Posture Expert :</h4>
+                Guide you with the efficient approach & practical solutions to real Occupational Ergonomic, Health, and Safety challenge which are proven effective in reducing workplace injuries.
+            </div>
+            <div class="flex pt-5 md:pt-0 w-3/4 md:w-1/3 lg:w-1/4 md:mx-5 lg:mx-8">
+                <img class="rounded-2xl shadow" src="/static/images/Dr Gaurav.webp" alt="Dr. Gaurav">
+            </div>
+        </div>
+    </div>
+
+    <div id="our-services" class="py-8 px-5 lg:px-0 bg-yellow-50">
+        <h4 class="text-xl md:text-[22px] lg:text-3xl text-center text-cyan-800">Our Services</h4>
+        <div class="my-3 flex flex-col md:flex-row justify-evenly items-center pt-2 md:pt-5">
+            <div id="servicesList" class="text-slate-500 text-base lg:text-lg">
+                We are providing Physiotherapy services with all equipment and skills at your place. 
+                <ul class="mt-2">
+                    <li class="pb-1">• &nbsp;Geriatric care</li>
+                    <li class="pb-1">• &nbsp;Postural training</li>
+                    <li class="pb-1">• &nbsp;Physiotherapy in Cervical</li>
+                    <li class="pb-1">• &nbsp;Spondylitis And Low Back Pain</li>
+                    <li class="pb-1">• &nbsp;Rehabilitation after surgery like TKR and THR etc</li>
+                    <li class="pb-1">• &nbsp;Chest physiotherapy for COVID patients</li>
+                    <li class="pb-1">• &nbsp;General Conditioning exercises</li>
+                </ul> 
+            </div>
+            <div class="flex pt-5 md:pt-0 w-3/4 md:w-2/5 lg:w-1/4">
+                <img class="rounded-full shadow" src="/static/images/services.webp" alt="Dr. Gaurav Physiotherapy Services">
+            </div>
+        </div>
+    </div>
+
+    <div id="book-appointment" class="py-8 px-5 lg:px-0">
+        <h4 class="text-xl md:text-[22px] lg:text-3xl text-center text-cyan-800">Book Appointment</h4>
+        <div class="my-0 md:my-3 flex flex-col md:flex-row justify-evenly items-center pt-0 md:pt-5">
+            <div class="flex flex-col items-center justify-center pt-0 md:pt-0 w-3/4 md:w-2/5 lg:w-1/3">
+                <img src="/static/images/bookappointment.webp" alt="Dr. Gaurav Physiotherapy Book Appointment">
+                <h4 class="text-slate-500 text-center pt-1">Enter your details, book a slot and your appointment is done.</h4>
+                <h4 class="text-slate-500 text-center pt-1">You will also get an email regarding your appointment.</h4>
+            </div>
+            <div class="text-slate-900 text-base lg:text-lg w-3/4 md:w-1/2 lg:w-1/3 mt-10 md:mt-0">
+                <form action="/book-appointment" method="post">
+                    <div class="mb-5">
+                        <label for="name" class=" my-0">Name <sup class="text-red-600">*</sup></label>
+                        <input type="text" class="w-full border-2 rounded-md px-2 py-1" name="name" id="name" placeholder="Your Name Here">
+                        <div id="name-req" class="text-sm md:text-base text-red-600" style="display: none;">Name cannot be blank </div>
+                    </div>
+                    <div class="mb-5">
+                        <label for="mail" class=" my-0">Email <sup class="text-red-600">*</sup></label>
+                        <input type="text" class="w-full border-2 rounded-md px-2 py-1" name="email" id="mail" placeholder="Your Email Here">
+                        <div id="mail-req" class="text-sm md:text-base text-red-600" style="display: none;">Email cannot be blank </div>
+                        <div id="mail-format" class="text-sm md:text-base text-red-600" style="display: none;">Invalid Email </div>
+                    </div>
+                    <div class="mb-5">
+                        <label for="cont" class=" my-0">Contact Number <sup class="text-red-600">*</sup></label>
+                        <input type="number" class="w-full border-2 rounded-md px-2 py-1" name="contact" id="cont" placeholder="Your Contact Number Here">
+                        <div id="cont-req" class="text-sm md:text-base text-red-600" style="display: none;">Contact Number cannot be blank </div>
+                        <div id="cont-format" class="text-sm md:text-base text-red-600" style="display: none;">Invalid Contact Number </div>
+                        <div id="cont-start" class="text-sm md:text-base text-red-600" style="display: none;">Contact Number should not start with 0</div>
+                    </div>
+                    <div class="mb-5">
+                        <label for="dt" class=" my-0">Preferred Date <sup class="text-red-600">*</sup></label>
+                        <input type="date" class="w-full border-2 rounded-md px-2 py-1" name="dateSlot" id="dt" placeholder="Your Name Here">
+                        <div id="dt-req" class="text-sm md:text-base text-red-600" style="display: none;">Date cannot be blank </div>
+                        <div id="dt-now" class="text-sm md:text-base text-red-600" style="display: none;">Sorry, But you cannot book slot for today now</div>
+                        <div id="dt-off" class="text-sm md:text-base text-red-600" style="display: none;">Sorry, But we do not book appointments for Sundays</div>
+                    </div>
+                    <div class="mb-5">
+                        <label for="time" class=" my-0">Preferred Time Slot <sup class="text-red-600">*</sup></label>
+                        <select class="w-full border-2 rounded-md px-2 py-1" name="timeSlot" id="time">
+                            <option value="">--- Select Time Slot ---</option>
+                            <option value="10am-12pm">10 am to 12 pm</option>
+                            <option value="4pm-6pm">4 pm to 6 pm</option>
+                        </select>
+                        <div id="time-req" class="text-sm md:text-base text-red-600" style="display: none;">Time Slot cannot be blank </div>
+                        <div id="time-inv" class="text-sm md:text-base text-red-600" style="display: none;">Sorry, But you cannot book this time slot for today now </div>
+                    </div>
+                    <div class="mb-5">
+                        <label for="loc" class=" my-0">Location <sup class="text-red-600">*</sup></label>
+                        <br>
+                        <select class="w-full border-2 rounded-md px-2 py-1" name="location" id="loc">
+                            <option value="">--- Select Location ---</option>
+                            <option value="Haridwar">Haridwar</option>
+                            <option value="Dehradun">Dehradun</option>
+                            <option value="Roorkee">Roorkee</option>
+                        </select>
+                        <div id="loc-req" class="text-sm md:text-base text-red-600" style="display: none;">Location cannot be blank </div>
+                    </div>
+                    <div class="mb-5">
+                        <label for="mycheckbox" class="my-0">
+                            <input type="checkbox" name="mycheckbox" id="mycheckbox"><span class="text-slate-500 text-[15px]"> Fees is ₹500 /- and the physiotherapist will come to your home on day and time for which you have booked appointment.</span>
+                        </label>
+                        <div id="check-req" class="text-sm md:text-base text-red-600" style="display: none;">Please read and confirm the checkbox </div>
+                    </div>
+                    <button class="bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-1 rounded-md" id="appointment" type="submit">Book Appointment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="testimonials" class="py-8 px-5 lg:px-0 bg-green-50">
+        <h4 class="text-xl md:text-[22px] lg:text-3xl text-center text-cyan-800">Testimonials</h4>
+        <h4 class="text-xl md:text-[22px] lg:text-3xl text-center text-slate-500 pt-1">What People Say About Us ?</h4>
+        <div class="text-slate-600 body-font">
+            <div class="container px-5 py-8 mx-auto">
+              <div class="flex flex-wrap -m-4">
+                <div class="p-4 md:w-1/3 w-full">
+                  <div class="h-full bg-cyan-100 p-8 rounded text-[15px] md:text-base">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="block w-5 h-5 text-slate-500 mb-4" viewBox="0 0 975.036 975.036">
+                      <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z"></path>
+                    </svg>
+                    <p class="leading-relaxed mb-6">Really Thankful to Dr. Gaurav for the Cervical Treatment. He guided me to better postures to avoid it.</p>
+                    <span class="flex-grow flex flex-col">
+                      <span class="title-font font-medium text-slate-900">Mamta</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="p-4 md:w-1/3 w-full">
+                  <div class="h-full bg-cyan-100 p-8 rounded text-[15px] md:text-base">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="block w-5 h-5 text-slate-500 mb-4" viewBox="0 0 975.036 975.036">
+                      <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z"></path>
+                    </svg>
+                    <p class="leading-relaxed mb-6">My mother had an injury in hand when the doctor said it will be difficult to revive the movement. Dr. Gaurav helped her with the therapy and with correct exercises, the movement is better.</p>
+                    <span class="flex-grow flex flex-col">
+                      <span class="title-font font-medium text-slate-900">Priya</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="p-4 md:w-1/3 w-full">
+                  <div class="h-full bg-cyan-100 p-8 rounded text-[15px] md:text-base">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="block w-5 h-5 text-slate-500 mb-4" viewBox="0 0 975.036 975.036">
+                      <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z"></path>
+                    </svg>
+                    <p class="leading-relaxed mb-6">I would really recommend him for the care and exercise for Elder person. He helps them to correct the knee and hand movements.</p>
+                    <span class="flex-grow flex flex-col">
+                      <span class="title-font font-medium text-slate-900">Abhishek</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-100 py-5 shadow-inner">
+        <div class='flex justify-center flex-col items-center space-y-5 md:flex-row md:space-x-20 md:space-y-0 lg:flex-row lg:space-y-0 lg:space-x-20'>
+            <div class='flex flex-col'>
+                <h3 class='text-xl font-semibold'>Main Menu</h3>
+                <div class='flex flex-col items-center'>
+                    <a href="/" class='text-slate-600 hover:text-black mt-1'>Home</a>
+                    <a href="#about" class='text-slate-600 hover:text-black'>About</a>
+                    <a href="#our-services" class='text-slate-600 hover:text-black'>Our Services</a>
+                    <a href="#testimonials" class='text-slate-600 hover:text-black'>Testimonials</a>
+                </div>
+            </div>
+            <div class='flex flex-col'>
+                <h3 class='text-xl font-semibold'>Quick Links</h3>
+                <div class='flex flex-col items-center'>
+                    <a href="tel:+91 9719077550" class='text-slate-600 hover:text-black mt-1'>Call Us</a>
+                    <a href="mailto:kartikenminocha@gmail.com" class='text-slate-600 hover:text-black'>Email Us</a>
+                    <a class="text-slate-600 hover:text-black" href="https://www.facebook.com/Dr-Gaurav-Physiotherapy-103517138954972/" target="_blank" rel="noopener noreferrer">Facebook</a>
+                    <a class="text-slate-600 hover:text-black" href="https://www.youtube.com/channel/UC3NXmBb-j5MO5I7eHl5G5fA" target="_blank" rel="noopener noreferrer">Youtube</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class='flex flex-col justify-between px-7 xl:px-8 my-10 space-y-7 lg:space-y-0 lg:flex-row'>
+            
+            <div>
+                <h3 class='flex items-center font-semibold justify-center lg:justify-start'><span class='text-3xl'></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.88-2.88 7.19-5 9.88C9.92 16.21 7 11.85 7 9z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                    <span class='text-xl'>Location</span>
+                </h3>
+                <div class='text-slate-600 ml-[30px] text-center lg:text-left'>
+                    Shop No. 5 Sports and Fitness,
+                    <br>
+                    Opposite Ganga Service Station, Arya Nagar,
+                    <br>
+                    Haridwar, Uttrakhand
+                    <br>
+                    Pincode :  249407
+                </div>
+            </div>
+            
+            <div>
+                <h3 class='flex items-center font-semibold justify-center lg:justify-start'><span class='text-3xl'></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="27px" viewBox="0 0 24 24" width="27px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                    <span class='text-xl ml-[2px]'>Work Time</span>
+                </h3>
+                <div class='text-slate-600 ml-[30px] text-center lg:text-left'>
+                    10 am to 6 pm
+                </div>
+            </div>
+            
+            <div>
+                <h3 class='flex items-center font-semibold justify-center lg:justify-start'><span class='text-3xl'></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 0 24 24" width="28px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
+                    <span class='text-xl ml-[2px]'>Email</span>
+                </h3>
+                <div class='text-slate-600 ml-[30px] text-center lg:text-left'>
+                    kartikenminocha@gmail.com
+                </div>
+            </div>
+            
+            <div>
+                <h3 class='flex items-center font-semibold justify-center lg:justify-start'><span class='text-3xl'></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 0 24 24" width="28px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79h1.51m9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75l1.2-1.19M7.5 3H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1-1.24 0-2.45-.2-3.57-.57-.1-.04-.21-.05-.31-.05-.26 0-.51.1-.71.29l-2.2 2.2c-2.83-1.45-5.15-3.76-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1z"/></svg>
+                    <span class='text-xl ml-[2px]'>Contact</span>
+                </h3>
+                <div class='text-slate-600 ml-[30px] text-center lg:text-left'>
+                    +91 9719077550 <br />
+                    +91 9997997550
+                </div>
+            </div>
+        </div>
+        
+        <div class='text-center'>
+            <span class='text-xl font-semibold'>
+                &copy; 2022 &nbsp;|&nbsp; 
+                <span style="color: teal;" class='font-bold'>Dr. Gaurav</span> 
+                &nbsp;|&nbsp; 
+                All rights reserved
+            </span>
+        </div>
+    </footer>
+
+    <div>
+        <span id="backToTop" onclick="backToTop()" class="hidden fixed bottom-5 left-3 cursor-pointer z-50 text-6xl rounded-full bg-blue-700">
+            <svg xmlns="http://www.w3.org/2000/svg" height="45px" viewBox="0 0 24 24" width="45px" fill="white"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z"/></svg>
+        </span>
+    </div>
+
+    <div>
+        <span onclick="openWhatsapp()" class="fixed bottom-5 right-3 cursor-pointer z-50 text-6xl rounded-full bg-green-600">
+            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="50px" viewBox="0 0 24 24" width="50px" fill="white"><g><rect fill="none" height="24" width="24" y="0"/></g><g><g><g><path d="M19.05,4.91C17.18,3.03,14.69,2,12.04,2c-5.46,0-9.91,4.45-9.91,9.91c0,1.75,0.46,3.45,1.32,4.95L2.05,22l5.25-1.38 c1.45,0.79,3.08,1.21,4.74,1.21h0c0,0,0,0,0,0c5.46,0,9.91-4.45,9.91-9.91C21.95,9.27,20.92,6.78,19.05,4.91z M12.04,20.15 L12.04,20.15c-1.48,0-2.93-0.4-4.2-1.15l-0.3-0.18l-3.12,0.82l0.83-3.04l-0.2-0.31c-0.82-1.31-1.26-2.83-1.26-4.38 c0-4.54,3.7-8.24,8.24-8.24c2.2,0,4.27,0.86,5.82,2.42c1.56,1.56,2.41,3.63,2.41,5.83C20.28,16.46,16.58,20.15,12.04,20.15z M16.56,13.99c-0.25-0.12-1.47-0.72-1.69-0.81c-0.23-0.08-0.39-0.12-0.56,0.12c-0.17,0.25-0.64,0.81-0.78,0.97 c-0.14,0.17-0.29,0.19-0.54,0.06c-0.25-0.12-1.05-0.39-1.99-1.23c-0.74-0.66-1.23-1.47-1.38-1.72c-0.14-0.25-0.02-0.38,0.11-0.51 c0.11-0.11,0.25-0.29,0.37-0.43c0.12-0.14,0.17-0.25,0.25-0.41c0.08-0.17,0.04-0.31-0.02-0.43c-0.06-0.12-0.56-1.34-0.76-1.84 c-0.2-0.48-0.41-0.42-0.56-0.43C8.86,7.33,8.7,7.33,8.53,7.33c-0.17,0-0.43,0.06-0.66,0.31C7.65,7.89,7.01,8.49,7.01,9.71 c0,1.22,0.89,2.4,1.01,2.56c0.12,0.17,1.75,2.67,4.23,3.74c0.59,0.26,1.05,0.41,1.41,0.52c0.59,0.19,1.13,0.16,1.56,0.1 c0.48-0.07,1.47-0.6,1.67-1.18c0.21-0.58,0.21-1.07,0.14-1.18S16.81,14.11,16.56,13.99z"/></g></g></g></svg>
+        </span>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
